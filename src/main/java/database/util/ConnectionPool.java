@@ -9,7 +9,7 @@ import java.util.concurrent.BlockingQueue;
 public class ConnectionPool {
     private final int MAX_CONNECTION = 10;
     private final String DRIVER_NAME = "org.postgresql.Driver";
-    private final String URL = "";
+    private final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private final String USER = "postgres";
     private final String PASSWORD = "postgres";
     private static ConnectionPool instance;
@@ -40,5 +40,18 @@ public class ConnectionPool {
         }
     }
 
-    public synchronized void ab(){}
+    public synchronized Connection getConnection() {
+        try {
+            return pool.take();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public synchronized void returnConnection(Connection connection){
+        try {
+            pool.put(connection);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

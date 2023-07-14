@@ -1,34 +1,40 @@
 package database.entity;
 
-import java.util.Calendar;
-import java.util.UUID;
+import java.time.LocalDate;
 
 public class User {
-    private final UUID id;
-    private final String fullName;
-    private final int age;
-    private final Calendar calendar;
+    private Long id;
+    private String fullName;
 
-    public User(UUID uuid, String fullName, int age, Calendar calendar) {
-        this.id = uuid;
-        this.fullName = fullName;
-        this.age = age;
-        this.calendar = calendar;
+    public User() {
     }
 
-    public UUID getId() {
+    public User(Long id, String fullName) {
+        this.id = id;
+        this.fullName = fullName;
+    }
+
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public int getAge() {
-        return age;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public Calendar getCalendar() {
-        return calendar;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                '}';
     }
 }
