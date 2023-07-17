@@ -4,6 +4,10 @@
     <groupId>org.example</groupId>
     <artifactId>birthday-notifier</artifactId>
     <packaging>war</packaging>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
     <version>1.0-SNAPSHOT</version>
     <name>birthday-notifier Maven Webapp</name>
     <url>http://maven.apache.org</url>

@@ -37,9 +37,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getById(Long id) {
         User user = null;
-        try (Connection connection= connectionPool.getConnection();
-             PreparedStatement statement= connection.prepareStatement("SELECT * FROM USERS WHERE id = ?");
-        ){
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM USERS WHERE id = ?");
+        ) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -57,22 +57,54 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User createUser(User user) {
-        return null;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO USERS VALUES (?,?)")) {
+            statement.setLong(1, user.getId());
+            statement.setString(2, user.getFullName());
+            statement.executeUpdate();
+            connectionPool.returnConnection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 
     @Override
     public User updateById(Long id, User user) {
-        return null;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE USERS SET ID=?, FULLNAME=?")) {
+            statement.setLong(1, user.getId());
+            statement.setString(2, user.getFullName());
+            statement.executeUpdate();
+            connectionPool.returnConnection(connection);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 
     @Override
     public void deleteById(Long id) {
-
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM USERS WHERE ID=?")) {
+            statement.setLong(1, id);
+            statement.executeUpdate();
+            connectionPool.returnConnection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {
         UserDaoImpl userDao = new UserDaoImpl(ConnectionPool.getConnectionPool());
         System.out.println(userDao.getAll());
-        System.out.println(userDao.getById(2L));
+        System.out.println(userDao.getById(3L));
+        //System.out.println(userDao.createUser(new User(3l, "ОЛОЛОЕВ Гамаз")));
+        System.out.println(userDao.updateById(4l,new User(3l,"АЗАЗАЕВ ИДР") ));
+        //System.out.println(userDao.createUser(new User(4l, "Сидоров Сергей")));
+
+        System.out.println(userDao.getAll());
+
     }
 }
