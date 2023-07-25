@@ -1,8 +1,8 @@
 package database.dao.impl;
 
 import database.dao.UserDao;
-import database.entity.User;
-import database.util.ConnectionPool;
+import database.dao.entity.User;
+import database.dao.util.ConnectionPool;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -38,8 +38,7 @@ public class UserDaoImpl implements UserDao {
     public User getById(Long id) {
         User user = null;
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM USERS WHERE id = ?");
-        ) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM USERS WHERE id = ?")) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -58,9 +57,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User createUser(User user) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO USERS VALUES (?,?)")) {
-            statement.setLong(1, user.getId());
-            statement.setString(2, user.getFullName());
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO USERS (fullname) VALUES (?)")) {
+            statement.setString(1, user.getFullName());
             statement.executeUpdate();
             connectionPool.returnConnection(connection);
         } catch (SQLException e) {
@@ -72,12 +70,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User updateById(Long id, User user) {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE USERS SET ID=?, FULLNAME=?")) {
-            statement.setLong(1, user.getId());
-            statement.setString(2, user.getFullName());
+             PreparedStatement statement = connection.prepareStatement("UPDATE USERS SET fullname=? WHERE ID=?")) {
+            statement.setString(1, user.getFullName());
+            statement.setLong(2, user.getId());
             statement.executeUpdate();
             connectionPool.returnConnection(connection);
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -98,12 +95,12 @@ public class UserDaoImpl implements UserDao {
 
     public static void main(String[] args) {
         UserDaoImpl userDao = new UserDaoImpl(ConnectionPool.getConnectionPool());
+        //System.out.println(userDao.getAll());
+        //System.out.println(userDao.getById(3L));
+        //System.out.println(userDao.createUser(new User(5l, "АЗАЗАЕВ ИДР")));
         System.out.println(userDao.getAll());
-        System.out.println(userDao.getById(3L));
-        //System.out.println(userDao.createUser(new User(3l, "ОЛОЛОЕВ Гамаз")));
-        System.out.println(userDao.updateById(4l,new User(3l,"АЗАЗАЕВ ИДР") ));
+        //System.out.println(userDao.updateById(4l, new User(5l, "ГАмазов ЛЕша")));
         //System.out.println(userDao.createUser(new User(4l, "Сидоров Сергей")));
-
         System.out.println(userDao.getAll());
 
     }

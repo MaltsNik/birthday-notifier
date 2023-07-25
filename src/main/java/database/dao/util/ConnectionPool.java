@@ -1,4 +1,4 @@
-package database.util;
+package database.dao.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,7 +39,6 @@ public class ConnectionPool {
             return instance;
         }
     }
-
     public synchronized Connection getConnection() {
         try {
             return pool.take();

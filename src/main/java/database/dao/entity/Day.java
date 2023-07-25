@@ -1,19 +1,17 @@
-package database.entity;
+package database.dao.entity;
 
 import java.time.LocalDate;
 
 public class Day {
     private Long id;
     private LocalDate date;
-    private Long userId;
 
     public Day() {
     }
 
-    public Day(Long id, LocalDate date, Long userId) {
+    public Day(Long id, LocalDate date) {
         this.id = id;
         this.date = date;
-        this.userId = userId;
     }
 
     public Long getId() {
@@ -32,20 +30,11 @@ public class Day {
         this.date = date;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
         return "Day{" +
                 "id=" + id +
                 ", date=" + date +
-                ", userId=" + userId +
                 '}';
     }
 }

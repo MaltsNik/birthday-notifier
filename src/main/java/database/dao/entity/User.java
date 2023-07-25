@@ -1,6 +1,4 @@
-package database.entity;
-
-import java.time.LocalDate;
+package database.dao.entity;
 
 public class User {
     private Long id;
@@ -8,12 +6,10 @@ public class User {
 
     public User() {
     }
-
     public User(Long id, String fullName) {
         this.id = id;
         this.fullName = fullName;
     }
-
     public Long getId() {
         return id;
     }
