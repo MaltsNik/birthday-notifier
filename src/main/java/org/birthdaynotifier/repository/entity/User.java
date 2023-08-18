@@ -1,6 +1,7 @@
 package org.birthdaynotifier.repository.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -11,16 +12,16 @@ public class User {
     private Long id;
     @Column(name = "fullname")
     private String fullName;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "day_id")
-    private Day day;
+    @Column(name = "date")
+    private LocalDate date;
 
     public User() {
     }
 
-    public User(Long id, String fullName) {
+    public User(Long id, String fullName, LocalDate date) {
         this.id = id;
         this.fullName = fullName;
+        this.date = date;
     }
 
     public Long getId() {
@@ -39,12 +40,12 @@ public class User {
         this.fullName = fullName;
     }
 
-    public Day getDay() {
-        return day;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDay(Day day) {
-        this.day = day;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
@@ -52,7 +53,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
-                ", day=" + day.getDate() +
+                ", date=" + date +
                 '}';
     }
 

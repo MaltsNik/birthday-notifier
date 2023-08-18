@@ -1,17 +1,19 @@
 package org.birthdaynotifier.service.model;
 
 
+import java.time.LocalDate;
+
 public class UserDto {
 
     private String fullName;
-    private DayDto day;
+    private LocalDate date;
 
     public UserDto() {
     }
 
-    public UserDto(String fullName, DayDto day) {
+    public UserDto(String fullName, LocalDate date) {
         this.fullName = fullName;
-        this.day = day;
+        this.date = date;
     }
 
     public String getFullName() {
@@ -22,19 +24,11 @@ public class UserDto {
         this.fullName = fullName;
     }
 
-    public DayDto getDay() {
-        return day;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDay(DayDto day) {
-        this.day = day;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "fullName='" + fullName + '\'' +
-                ", day=" + day.getDate() +
-                '}';
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

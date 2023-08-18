@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/migrations/1birthday-notifier-schema-users.sql
   - include:
       file: db/changelog/migrations/2birthday-notifier-schema-days.sql
+  - include:
+      file: db/changelog/migrations/3birthday-notifier-transfer.sql
