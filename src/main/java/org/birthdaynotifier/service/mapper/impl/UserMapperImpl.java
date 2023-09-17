@@ -1,7 +1,9 @@
 package org.birthdaynotifier.service.mapper.impl;
 
+import org.birthdaynotifier.repository.entity.Day;
 import org.birthdaynotifier.repository.entity.User;
 import org.birthdaynotifier.service.mapper.UserMapper;
+import org.birthdaynotifier.service.model.DayDto;
 import org.birthdaynotifier.service.model.UserDto;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 @Component
+
 public class UserMapperImpl implements UserMapper {
 
     @Override
@@ -18,13 +21,12 @@ public class UserMapperImpl implements UserMapper {
         }
         final UserDto userDto = new UserDto();
         userDto.setFullName(source.getFullName());
-        userDto.setDate(source.getDate());
-//        DayDto dto = null;
-//        if (source.getDay() != null) {
-//            dto = new DayDto();
-//            dto.setDate(source.getDay().getDate());
-//        }
-//        userDto.setDay(dto);
+        DayDto dto = null;
+        if (source.getDay() != null) {
+            dto = new DayDto();
+            dto.setDate(source.getDay().getDate());
+        }
+        userDto.setDay(dto);
         return userDto;
     }
 
@@ -35,7 +37,13 @@ public class UserMapperImpl implements UserMapper {
         }
         final User user = new User();
         user.setFullName(source.getFullName());
-        user.setDate(source.getDate());
+        Day day = null;
+        if (source.getDay() != null) {
+            day = new Day();
+            day.setId(source.getDay().getId());
+            day.setDate(source.getDay().getDate());
+        }
+        user.setDay(day);
         return user;
     }
 

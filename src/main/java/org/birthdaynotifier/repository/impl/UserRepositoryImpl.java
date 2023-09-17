@@ -1,6 +1,8 @@
 package org.birthdaynotifier.repository.impl;
 
+import org.birthdaynotifier.repository.DayRepository;
 import org.birthdaynotifier.repository.UserRepository;
+import org.birthdaynotifier.repository.entity.Day;
 import org.birthdaynotifier.repository.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -40,6 +42,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByFullName(String fullName) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from User u where u.fullName=:fullname",User.class)
+                    .setParameter("fullname",fullName)
+                    .uniqueResultOptional();
+        }
+    }
+
+    @Override
     public Optional<Long> createUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable((Long) session.save(user));
@@ -51,6 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             User userToUpdate = session.find(User.class, id);
+            userToUpdate.setDay(user.getDay());
             userToUpdate.setFullName(user.getFullName());
             session.saveOrUpdate(userToUpdate);
             session.getTransaction().commit();
@@ -66,22 +78,5 @@ public class UserRepositoryImpl implements UserRepository {
             session.remove(user);
             session.getTransaction().commit();
         }
-    }
-
-    public static void main(String[] args) {
-        Configuration configuration = new Configuration().configure();
-        SessionFactory sessionFactory1 = configuration.buildSessionFactory();
-        UserRepository userRepository = new UserRepositoryImpl(sessionFactory1);
-        User user1 = new User();
-        user1.setFullName("Иванов Иван");
-        user1.setDate(LocalDate.of(2020, 7, 10));
-        //userRepository.createUser(user1);
-       // System.out.println(userRepository.createUser(user1));
-        User user2= new User();
-        user2.setFullName("Иванов Иван Иванович");
-        user2.setDate(LocalDate.of(2010,7,10));
-        System.out.println(userRepository.updateById(1l,user2));
-
-
     }
 }

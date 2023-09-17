@@ -6,11 +6,12 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.password">postgres</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/birthday_notifier</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
+        <mapping class="org.birthdaynotifier.repository.entity.Day"/>
         <mapping class="org.birthdaynotifier.repository.entity.User"/>
     </session-factory>
 </hibernate-configuration>
