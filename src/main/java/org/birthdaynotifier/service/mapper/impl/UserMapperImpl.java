@@ -24,6 +24,7 @@ public class UserMapperImpl implements UserMapper {
         DayDto dto = null;
         if (source.getDay() != null) {
             dto = new DayDto();
+            dto.setId(source.getDay().getId());
             dto.setDate(source.getDay().getDate());
         }
         userDto.setDay(dto);
