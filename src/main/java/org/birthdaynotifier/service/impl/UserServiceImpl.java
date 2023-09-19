@@ -46,19 +46,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long add(UserDto userDto) {
-        Optional<DayDto> optDay = dayService.getByDate(userDto.getDay().getDate());
-        if (optDay.isEmpty()) {
-            Long id = dayService.add(userDto.getDay());
-            userDto.getDay().setId(id);
-        } else {
-            userDto.getDay().setId(optDay.get().getId());
-        }
+        enrichWithDay(userDto);
         return userRepository.createUser(userMapper.toEntity(userDto)).
                 orElseThrow(() -> new RuntimeException("Error while saving"));
     }
 
     @Override
     public UserDto changeById(Long id, UserDto userDto) {
+        enrichWithDay(userDto);
         Optional<User> optionalUser = userRepository.updateById(id, userMapper.toEntity(userDto));
         User user = optionalUser.orElseThrow(() -> new RuntimeException("error while updating"));
         return userMapper.toDto(user);
@@ -67,5 +62,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    private void enrichWithDay(UserDto userDto) {
+      Optional<DayDto> optionalDayDto = dayService.getByDate(userDto.getDay().getDate());
+      if (optionalDayDto.isEmpty()) {
+        Long addedDayId = dayService.add(userDto.getDay());
+        userDto.getDay().setId(addedDayId);
+      } else {
+        userDto.getDay().setId(optionalDayDto.get().getId());
+      }
     }
 }

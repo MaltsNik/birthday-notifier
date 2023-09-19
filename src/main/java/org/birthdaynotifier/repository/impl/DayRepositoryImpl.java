@@ -54,7 +54,6 @@ public class DayRepositoryImpl implements DayRepository {
     try (Session session = sessionFactory.openSession()) {
       session.beginTransaction();
       Day dayToUpdate = session.find(Day.class, id);
-      dayToUpdate.setUsers(day.getUsers());
       dayToUpdate.setDate(day.getDate());
       session.saveOrUpdate(dayToUpdate);
       session.getTransaction().commit();
