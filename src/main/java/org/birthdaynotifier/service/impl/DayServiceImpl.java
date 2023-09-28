@@ -43,20 +43,25 @@ public class DayServiceImpl implements DayService {
     }
 
     @Override
-    public Long add(DayDto day) {
-//        Optional<DayDto> optDay = getByDate(day.getDate());
-//        if(optDay.isPresent()){
-//
-//            throw new RuntimeException("such a day exists");
-//        }
-        return dayRepository.createDay(dayMapper.toEntity(day)).orElseThrow(() -> new RuntimeException("Couldn't save day"));
+    public Long add(DayDto dayDto) {
+        Optional<Day> day = dayRepository.findByDay(dayDto.getDate());
+        if (day.isEmpty()) {
+            return dayRepository.createDay(dayMapper.toEntity(dayDto))
+                    .orElseThrow(() -> new RuntimeException("Error while creating day"));
+        }
+        throw new RuntimeException("Day is already exist");
     }
 
     @Override
     public DayDto changeById(Long id, DayDto dayDto) {
-        Optional<Day> optionalDay = dayRepository.updateById(id, dayMapper.toEntity(dayDto));
-        Day day = optionalDay.orElseThrow(() -> new RuntimeException("error while updating"));
-        return dayMapper.toDto(day);
+        Optional<Day> day = dayRepository.findByDay(dayDto.getDate());
+        if (day.isEmpty()) {
+            return dayMapper.toDto(
+                    dayRepository.updateById(id, dayMapper.toEntity(dayDto))
+                            .orElseThrow(() -> new RuntimeException(""))
+            );
+        }
+        throw new RuntimeException("Day is already exist");
     }
 
     @Override
