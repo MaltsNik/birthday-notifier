@@ -1,16 +1,12 @@
 package org.birthdaynotifier.repository.impl;
 
-import org.birthdaynotifier.repository.DayRepository;
 import org.birthdaynotifier.repository.UserRepository;
-import org.birthdaynotifier.repository.entity.Day;
 import org.birthdaynotifier.repository.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +40,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findByFullName(String fullName) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from User u where u.fullName=:fullname",User.class)
-                    .setParameter("fullname",fullName)
+            return session.createQuery("from User u where u.fullName=:fullname", User.class)
+                    .setParameter("fullname", fullName)
                     .uniqueResultOptional();
         }
     }

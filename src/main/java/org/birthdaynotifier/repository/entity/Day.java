@@ -58,21 +58,21 @@ public class Day {
                 '}';
     }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Day day = (Day) o;
+        return Objects.equals(id, day.id);
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Day day = (Day) o;
-    return Objects.equals(id, day.id);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
-  }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
 }

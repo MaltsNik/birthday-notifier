@@ -2,7 +2,6 @@ package org.birthdaynotifier.controller;
 
 import org.birthdaynotifier.service.DayService;
 import org.birthdaynotifier.service.model.DayDto;
-import org.birthdaynotifier.service.model.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +41,7 @@ public class DayController {
     }
 
     @PutMapping("/days/{id}")
-    public ResponseEntity<DayDto> updateDay(@PathVariable(value = "id") @RequestBody Long id, DayDto dayDto) {
+    public ResponseEntity<DayDto> updateDay(@PathVariable(value = "id") Long id, @RequestBody DayDto dayDto) {
         return ResponseEntity.ok(dayService.changeById(id, dayDto));
     }
 
