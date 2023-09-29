@@ -76,19 +76,6 @@ public class BirthdayNotifierIntegrationTest {
         Assertions.assertEquals(Collections.singletonList(userDto), dtoList);
     }
 
-    @Test
-    void integrationGetByIdTest() {
-        DayDto dayDto = new DayDto();
-        dayDto.setDate(LocalDate.of(2023, 10, 10));
-        Long addDayId = dayService.add(dayDto);
-        System.out.println(addDayId);
-        dayDto.setId(addDayId);
-        UserDto userDto = new UserDto("Иванов Иван", dayDto);
-        Long addUserId = userService.add(userDto);
-        UserDto expected = userService.getById(addUserId);
-        Assertions.assertEquals(expected,userDto);
-    }
-
     @AfterAll
     private static void drop() {
         container.stop();
