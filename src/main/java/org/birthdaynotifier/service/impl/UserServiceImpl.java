@@ -65,12 +65,12 @@ public class UserServiceImpl implements UserService {
     }
 
     private void enrichWithDay(UserDto userDto) {
-      Optional<DayDto> optionalDayDto = dayService.getByDate(userDto.getDay().getDate());
-      if (optionalDayDto.isEmpty()) {
-        Long addedDayId = dayService.add(userDto.getDay());
-        userDto.getDay().setId(addedDayId);
-      } else {
-        userDto.getDay().setId(optionalDayDto.get().getId());
-      }
+        Optional<DayDto> optDay = dayService.getByDate(userDto.getDay().getDate());
+        if (optDay.isEmpty()) {
+            Long id = dayService.add(userDto.getDay());
+            userDto.getDay().setId(id);
+        } else {
+            userDto.getDay().setId(optDay.get().getId());
+        }
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
 @Component
 
 public class UserMapperImpl implements UserMapper {
@@ -62,7 +63,6 @@ public class UserMapperImpl implements UserMapper {
 //        }
 //
 //        return userDtoList;
-
         return source.stream().map(this::toDto).filter(Objects::nonNull).collect(Collectors.toList());
     }
 

@@ -1,6 +1,5 @@
 package org.birthdaynotifier.service.model;
 
-
 import java.util.Objects;
 
 public class UserDto {

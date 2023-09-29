@@ -42,26 +42,28 @@ public class DayServiceImpl implements DayService {
     return dayRepository.findByDay(date).map(dayMapper::toDto);
   }
 
-  @Override
-  public Long add(DayDto dayDto) {
-    Optional<Day> day = dayRepository.findByDay(dayDto.getDate());
-    if (day.isEmpty()) {
-      return dayRepository.createDay(dayMapper.toEntity(dayDto))
-              .orElseThrow(() -> new RuntimeException("Error while creating day"));
-    }
-    throw new RuntimeException("Day is already exists");
+
+    @Override
+    public Long add(DayDto dayDto) {
+        Optional<Day> day = dayRepository.findByDay(dayDto.getDate());
+        if (day.isEmpty()) {
+            return dayRepository.createDay(dayMapper.toEntity(dayDto))
+                    .orElseThrow(() -> new RuntimeException("Error while creating day"));
+        }
+        throw new RuntimeException("Day is already exist");
   }
 
-  @Override
-  public DayDto changeById(Long id, DayDto dayDto) {
-    Optional<Day> day = dayRepository.findByDay(dayDto.getDate());
-    if (day.isEmpty()) {
-      return dayMapper.toDto(
-              dayRepository.updateById(id, dayMapper.toEntity(dayDto))
-                      .orElseThrow(() -> new RuntimeException("error while updating"))
-      );
-    }
-    throw new RuntimeException("Day is already exists");
+
+    @Override
+    public DayDto changeById(Long id, DayDto dayDto) {
+        Optional<Day> day = dayRepository.findByDay(dayDto.getDate());
+        if (day.isEmpty()) {
+            return dayMapper.toDto(
+                    dayRepository.updateById(id, dayMapper.toEntity(dayDto))
+                            .orElseThrow(() -> new RuntimeException(""))
+            );
+        }
+        throw new RuntimeException("Day is already exist");
   }
 
   @Override

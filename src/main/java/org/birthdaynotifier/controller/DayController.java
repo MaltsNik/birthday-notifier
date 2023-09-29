@@ -2,7 +2,6 @@ package org.birthdaynotifier.controller;
 
 import org.birthdaynotifier.service.DayService;
 import org.birthdaynotifier.service.model.DayDto;
-import org.birthdaynotifier.service.model.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
