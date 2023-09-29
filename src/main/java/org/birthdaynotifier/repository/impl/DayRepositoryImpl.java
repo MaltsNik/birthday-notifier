@@ -49,6 +49,7 @@ public class DayRepositoryImpl implements DayRepository {
         }
     }
 
+
     @Override
     public Optional<Day> updateById(Long id, Day day) {
         try (Session session = sessionFactory.openSession()) {

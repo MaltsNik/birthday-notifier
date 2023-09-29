@@ -30,11 +30,6 @@ public class DayController {
         return ResponseEntity.ok(dayService.getById(id));
     }
 
-    @GetMapping("/days/{date}")
-    public ResponseEntity<Optional<DayDto>> getDayByDate(@PathVariable(value = "date") @RequestBody LocalDate date) {
-        return ResponseEntity.ok(dayService.getByDate(date));
-    }
-
     @PostMapping("/days")
     public ResponseEntity<Long> createDay(@RequestBody DayDto dayDto) {
         return ResponseEntity.ok(dayService.add(dayDto));

@@ -14,33 +14,34 @@ import java.util.Optional;
 @Service
 public class DayServiceImpl implements DayService {
 
-    private final DayRepository dayRepository;
+  private final DayRepository dayRepository;
 
-    private final DayMapper dayMapper;
+  private final DayMapper dayMapper;
 
-    public DayServiceImpl(DayRepository dayRepository, DayMapper dayMapper) {
-        this.dayRepository = dayRepository;
-        this.dayMapper = dayMapper;
-    }
+  public DayServiceImpl(DayRepository dayRepository, DayMapper dayMapper) {
+    this.dayRepository = dayRepository;
+    this.dayMapper = dayMapper;
+  }
 
-    @Override
-    public List<DayDto> getAll() {
-        Optional<List<Day>> optionalDays = dayRepository.findAll();
-        List<Day> dayList = optionalDays.orElseThrow(() -> new RuntimeException("days not found"));
-        return dayMapper.toDto(dayList);
-    }
+  @Override
+  public List<DayDto> getAll() {
+    Optional<List<Day>> optionalDays = dayRepository.findAll();
+    List<Day> dayList = optionalDays.orElseThrow(() -> new RuntimeException("days not found"));
+    return dayMapper.toDto(dayList);
+  }
 
-    @Override
-    public DayDto getById(Long id) {
-        Optional<Day> optionalDay = dayRepository.findById(id);
-        Day day = optionalDay.orElseThrow(() -> new RuntimeException("day not found"));
-        return dayMapper.toDto(day);
-    }
+  @Override
+  public DayDto getById(Long id) {
+    Optional<Day> optionalDay = dayRepository.findById(id);
+    Day day = optionalDay.orElseThrow(() -> new RuntimeException("day not found"));
+    return dayMapper.toDto(day);
+  }
 
-    @Override
-    public Optional<DayDto> getByDate(LocalDate date) {
-        return dayRepository.findByDay(date).map(dayMapper::toDto);
-    }
+  @Override
+  public Optional<DayDto> getByDate(LocalDate date) {
+    return dayRepository.findByDay(date).map(dayMapper::toDto);
+  }
+
 
     @Override
     public Long add(DayDto dayDto) {
@@ -50,7 +51,8 @@ public class DayServiceImpl implements DayService {
                     .orElseThrow(() -> new RuntimeException("Error while creating day"));
         }
         throw new RuntimeException("Day is already exist");
-    }
+  }
+
 
     @Override
     public DayDto changeById(Long id, DayDto dayDto) {
@@ -62,10 +64,11 @@ public class DayServiceImpl implements DayService {
             );
         }
         throw new RuntimeException("Day is already exist");
-    }
+  }
 
-    @Override
-    public void removeById(Long id) {
-        dayRepository.deleteById(id);
-    }
+  @Override
+  public void removeById(Long id) {
+    dayRepository.deleteById(id);
+  }
+
 }
