@@ -74,6 +74,16 @@ public class BirthdayNotifierIntegrationTest {
         Long addedUserId = userService.add(userDto);
         List<UserDto> dtoList = userService.getAll();
         Assertions.assertEquals(Collections.singletonList(userDto), dtoList);
+
+        UserDto expected = userService.getById(addedUserId);
+        Assertions.assertEquals(expected, userDto);
+
+        UserDto newUserDto = new UserDto("Петров Петр", dayDto);
+        UserDto changedUserDto = userService.changeById(addedUserId, newUserDto);
+        Assertions.assertEquals(changedUserDto, newUserDto);
+
+        userService.removeById(addedUserId);
+        Assertions.assertThrows(RuntimeException.class, () -> userService.getById(addedUserId));
     }
 
     @AfterAll
