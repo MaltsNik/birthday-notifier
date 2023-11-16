@@ -15,5 +15,4 @@ public class AppConfiguration {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration().configure();
         return configuration.buildSessionFactory();
     }
-
 }
