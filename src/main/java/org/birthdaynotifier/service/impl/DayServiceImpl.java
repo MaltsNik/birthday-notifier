@@ -25,21 +25,25 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public List<DayDto> getAll() {
-        Optional<List<Day>> optionalDays = dayRepository.findAll();
-        List<Day> dayList = optionalDays.orElseThrow(() -> new RuntimeException("days not found"));
-        return dayMapper.toDto(dayList);
+        return dayRepository
+                .findAll()
+                .map(dayMapper::toDto)
+                .orElseThrow(() -> new RuntimeException("days not found"));
     }
 
     @Override
     public DayDto getById(Long id) {
-        Optional<Day> optionalDay = dayRepository.findById(id);
-        Day day = optionalDay.orElseThrow(() -> new RuntimeException("day not found"));
-        return dayMapper.toDto(day);
+        return dayRepository
+                .findById(id)
+                .map(dayMapper::toDto)
+                .orElseThrow(() -> new RuntimeException("days not found"));
     }
 
     @Override
     public Optional<DayDto> getByDate(LocalDate date) {
-        return dayRepository.findByDay(date).map(dayMapper::toDto);
+        return dayRepository
+                .findByDay(date)
+                .map(dayMapper::toDto);
     }
 
     @Override

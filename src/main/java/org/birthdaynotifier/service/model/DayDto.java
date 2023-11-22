@@ -4,14 +4,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class DayDto {
     private Long id;
     @DateTimeFormat(iso = ISO.DATE)
     private LocalDate date;
+    private List<UserDto> userDtoList;
 
     public DayDto() {
+    }
+
+    public DayDto(Long id, LocalDate date, List<UserDto> userDtoList) {
+        this.id = id;
+        this.date = date;
+        this.userDtoList = userDtoList;
     }
 
     public Long getId() {
@@ -30,9 +38,12 @@ public class DayDto {
         this.date = date;
     }
 
-    public DayDto(Long id, LocalDate date) {
-        this.id = id;
-        this.date = date;
+    public List<UserDto> getUserDtoList() {
+        return userDtoList;
+    }
+
+    public void setUserDtoList(List<UserDto> userDtoList) {
+        this.userDtoList = userDtoList;
     }
 
     @Override
