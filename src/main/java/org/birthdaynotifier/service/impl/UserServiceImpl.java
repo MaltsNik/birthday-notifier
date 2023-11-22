@@ -9,6 +9,7 @@ import org.birthdaynotifier.service.model.DayDto;
 import org.birthdaynotifier.service.model.UserDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,12 @@ public class UserServiceImpl implements UserService {
         Optional<List<User>> optionalUsers = userRepository.findAll();
         List<User> users = optionalUsers.orElseThrow(() -> new RuntimeException("No users found"));
         return userMapper.toDto(users);
+    }
+
+    @Override
+    public List<UserDto> getAllByDate(LocalDate day) {
+        DayDto dayDto = dayService.getByDate(day).orElseThrow(() -> new RuntimeException("Day not found"));
+        return dayDto.getUserDtoList();
     }
 
     @Override
@@ -65,12 +72,12 @@ public class UserServiceImpl implements UserService {
     }
 
     private void enrichWithDay(UserDto userDto) {
-      Optional<DayDto> optionalDayDto = dayService.getByDate(userDto.getDay().getDate());
-      if (optionalDayDto.isEmpty()) {
-        Long addedDayId = dayService.add(userDto.getDay());
-        userDto.getDay().setId(addedDayId);
-      } else {
-        userDto.getDay().setId(optionalDayDto.get().getId());
-      }
+        Optional<DayDto> optionalDayDto = dayService.getByDate(userDto.getDay().getDate());
+        if (optionalDayDto.isEmpty()) {
+            Long addedDayId = dayService.add(userDto.getDay());
+            userDto.getDay().setId(addedDayId);
+        } else {
+            userDto.getDay().setId(optionalDayDto.get().getId());
+        }
     }
 }

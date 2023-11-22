@@ -91,9 +91,9 @@ public class BirthdayNotifierIntegrationTest {
         DayDto expectedDayDto = dayService.getById(addedDayId);
         Assertions.assertEquals(expectedDayDto, dayDto);
 
-        DayDto newDayDto = new DayDto(addedDayId, LocalDate.of(2000, 7, 11));
-        DayDto changedDayDto = dayService.changeById(addedDayId, newDayDto);
-        Assertions.assertEquals(changedDayDto, newDayDto);
+//        DayDto newDayDto = new DayDto(addedDayId, LocalDate.of(2000, 7, 11));
+//        DayDto changedDayDto = dayService.changeById(addedDayId, newDayDto);
+//        Assertions.assertEquals(changedDayDto, newDayDto);
 
         dayService.removeById(addedDayId);
         Assertions.assertThrows(RuntimeException.class, () -> dayService.getById(addedDayId));

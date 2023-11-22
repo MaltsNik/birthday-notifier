@@ -2,11 +2,13 @@ package org.birthdaynotifier.service;
 
 import org.birthdaynotifier.service.model.UserDto;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
     List<UserDto> getAll();
+
+    List<UserDto> getAllByDate(LocalDate day);
 
     UserDto getById(Long id);
 
